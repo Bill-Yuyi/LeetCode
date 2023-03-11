@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -17,13 +18,14 @@ class RandomizedSet {
 
     public RandomizedSet() {
         map = new HashMap<>();
-        list = new ArrayList<>();
+        list = new LinkedList<>();
         rand = new Random();
     }
 
     public boolean insert(int val) {
-        if (map.containsKey(val))
+        if (map.containsKey(val)) {
             return false;
+        }
         map.put(val, list.size());
         list.add(list.size(), val);
         return true;
@@ -35,8 +37,8 @@ class RandomizedSet {
         }
         int idx = map.get(val);
         int lastElement = list.get(list.size() - 1);
-        list.set(idx, lastElement);
         map.put(lastElement, idx);
+        list.set(idx, lastElement);
         list.remove(list.size() - 1);
         map.remove(val);
         return true;
