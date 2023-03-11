@@ -7,26 +7,26 @@
 // @lc code=start
 class Solution {
     public String longestPalindrome(String s) {
-        int start = 0, cur = 0, maxLen = 0;
+        int cur = 0, start = 0, max = 0;
         for (int i = 0; i < s.length(); i++) {
             cur = Math.max(getLen(s, i, i), getLen(s, i, i + 1));
-            if (maxLen < cur) {
-                maxLen = cur;
+            if (cur > max) {
+                max = cur;
                 start = i - (cur - 1) / 2;
             }
         }
-        return s.substring(start, start + maxLen);
+        return s.substring(start, start + max);
     }
 
-    public int getLen(String s, int left, int right) {
-        while (left >= 0 && right < s.length()) {
-            if (s.charAt(left) != s.charAt(right)) {
+    public int getLen(String s, int i, int j) {
+        while (i >= 0 && j < s.length()) {
+            if (s.charAt(i) != s.charAt(j)) {
                 break;
             }
-            left--;
-            right++;
+            i--;
+            j++;
         }
-        return right - left - 1;
+        return j - i - 1;
     }
 }
 // @lc code=end
