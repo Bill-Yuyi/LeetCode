@@ -1,4 +1,3 @@
-import java.util.PriorityQueue;
 
 /*
  * @lc app=leetcode id=23 lang=java
@@ -19,14 +18,15 @@ import java.util.PriorityQueue;
  */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
+        if (lists.length == 0)
+            return null;
         return partition(lists, 0, lists.length - 1);
     }
 
     public ListNode partition(ListNode[] lists, int left, int right) {
-        if (left == right)
+        if (left == right) {
             return lists[left];
-        if (left > right)
-            return null;
+        }
         int mid = left + (right - left) / 2;
         ListNode l1 = partition(lists, left, mid);
         ListNode l2 = partition(lists, mid + 1, right);
