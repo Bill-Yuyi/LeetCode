@@ -17,8 +17,30 @@ class Node {
 
 class Solution {
     public Node flatten(Node head) {
-        
+        if (head == null || head.next == null && head.child == null) {
+            return head;
+        }
+        if (head.child == null) {
+            Node a = flatten(head.next);
+            a.prev = head;
+            head.next = a;
+            return head;
+        }
+        Node temp = head.next;
+        Node after = flatten(head.child);
+        Node cur = after;
+        while (cur != null && cur.next != null) {
+            cur = cur.next;
+        }
+        cur.next = temp;
+        if (temp != null) {
+            temp.prev = cur;
+        }
+        head.next = after;
+        after.prev = head;
+        head.child = null;
+        return head;
     }
 }
-// @lc code=end
 
+// @lc code=end
