@@ -24,17 +24,16 @@ class Solution {
         for (int right = 0; right < s.length(); right++) {
             char c = s.charAt(right);
             freqS[c]++;
-            if (freqS[c] == freqT[c] && freqT[c] != 0) {
+            if (freqS[c] == freqT[c]) {
                 valid++;
             }
             while (valid == required) {
-                if (valid == required) {
-                    if (ans[2] > right - left + 1) {
-                        ans[2] = right - left + 1;
-                        ans[0] = left;
-                        ans[1] = right;
-                    }
+                if (ans[2] > right - left + 1) {
+                    ans[2] = right - left + 1;
+                    ans[0] = left;
+                    ans[1] = right;
                 }
+
                 char out = s.charAt(left);
                 if (freqS[out] == freqT[out])
                     valid--;
