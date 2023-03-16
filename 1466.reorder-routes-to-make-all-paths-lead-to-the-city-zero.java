@@ -16,24 +16,21 @@ class Solution {
             map.computeIfAbsent(edge[0], val -> new ArrayList<>()).add(new int[] { edge[1], 1 });
             map.computeIfAbsent(edge[1], val -> new ArrayList<>()).add(new int[] { edge[0], 0 });
         }
-        queue.offer(0);
         visited[0] = true;
+        queue.offer(0);
         while (!queue.isEmpty()) {
             int cur = queue.poll();
-            if (!map.containsKey(cur)) {
-                continue;
-            }
-            for (int[] next : map.get(cur)) {
-                if (!visited[next[0]]) {
-                    res += next[1];
-                    queue.offer(next[0]);
-                    visited[next[0]] = true;
+            if (map.containsKey(cur)) {
+                for (int[] next : map.get(cur)) {
+                    if (!visited[next[0]]) {
+                        res += next[1];
+                        queue.offer(next[0]);
+                        visited[next[0]] = true;
+                    }
                 }
             }
         }
-
         return res;
-
     }
 }
 // @lc code=end
