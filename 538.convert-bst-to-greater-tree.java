@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
- * @lc app=leetcode id=1038 lang=java
+ * @lc app=leetcode id=538 lang=java
  *
- * [1038] Binary Search Tree to Greater Sum Tree
+ * [538] Convert BST to Greater Tree
  */
 
 // @lc code=start
@@ -24,15 +24,10 @@ import java.util.List;
  * }
  */
 class Solution {
-    List<Integer> list = new ArrayList<>();
-    int index = 0;
+    int sum = 0;
 
-    public TreeNode bstToGst(TreeNode root) {
+    public TreeNode convertBST(TreeNode root) {
         traverse(root);
-        for (int i = list.size() - 2; i >= 0; i--) {
-            list.set(i, list.get(i + 1) + list.get(i));
-        }
-        buildTree(root);
         return root;
     }
 
@@ -40,19 +35,11 @@ class Solution {
         if (root == null) {
             return;
         }
-        traverse(root.left);
-        list.add(root.val);
         traverse(root.right);
+        sum += root.val;
+        root.val = sum;
+        traverse(root.left);
     }
 
-    public void buildTree(TreeNode root) {
-        if (root == null) {
-            return;
-        }
-        buildTree(root.left);
-        root.val = list.get(index++);
-        buildTree(root.right);
-
-    }
 }
 // @lc code=end
