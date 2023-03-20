@@ -21,9 +21,10 @@
  * }
  */
 class Solution {
-    TreeNode first = null;
-    TreeNode second = null;
-    TreeNode prev = null;
+    // inorder traversal -> [1,2,3,4]
+    // [1,3,2,4]
+    // [6,2,3,4,5,1]
+    TreeNode first = null, second = null, prev = new TreeNode(Integer.MIN_VALUE);
 
     public void recoverTree(TreeNode root) {
         if (root == null) {
@@ -37,19 +38,19 @@ class Solution {
         }
     }
 
-    public void inorder(TreeNode node) {
-        if (node == null) {
+    public void inorder(TreeNode root) {
+        if (root == null) {
             return;
         }
-        inorder(node.left);
-        if (prev != null && prev.val > node.val && first == null) {
+        inorder(root.left);
+        if (prev != null && prev.val > root.val && first == null) {
             first = prev;
         }
-        if (prev != null && prev.val > node.val && first != null) {
-            second = node;
+        if (prev != null && prev.val > root.val && first != null) {
+            second = root;
         }
-        prev = node;
-        inorder(node.right);
+        prev = root;
+        inorder(root.right);
     }
 }
 // @lc code=end
