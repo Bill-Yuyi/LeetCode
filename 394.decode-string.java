@@ -9,33 +9,33 @@ import java.util.*;
 
 class Solution {
     public String decodeString(String s) {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder curString = new StringBuilder();
+        int curnum = 0;
         Stack<StringBuilder> stringStack = new Stack<>();
         Stack<Integer> numStack = new Stack<>();
-        int num = 0;
         for (char c : s.toCharArray()) {
             if (Character.isDigit(c)) {
-                num = num * 10 + (c - '0');
+                curnum = curnum * 10 + c - '0';
             } else if (c == '[') {
-                numStack.push(num);
-                stringStack.push(sb);
-                num = 0;
-                sb = new StringBuilder();
+                numStack.push(curnum);
+                stringStack.push(curString);
+                curnum = 0;
+                curString = new StringBuilder();
             } else if (c == ']') {
-                StringBuilder tmp = sb;
-                sb = stringStack.pop();
-                int time = numStack.pop();
-                for (int k = 0; k < time; k++) {
-                    sb.append(tmp);
+                StringBuilder tmp = curString;
+                curString = stringStack.pop();
+                for (int k = numStack.pop(); k > 0; k--) {
+                    curString.append(tmp);
                 }
             } else {
-                sb.append(c);
+                curString.append(c);
             }
         }
+
         while (!stringStack.isEmpty()) {
-            sb.append(stringStack.pop());
+            curString.append(stringStack.pop());
         }
-        return sb.toString();
+        return curString.toString();
     }
 }
 // @lc code=end
