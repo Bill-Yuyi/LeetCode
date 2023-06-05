@@ -17,36 +17,34 @@
  */
 class Solution {
     public void reorderList(ListNode head) {
-        if (head == null)
+        if (head == null) {
             return;
-        ListNode slow = head, fast = head;
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
         }
-        ListNode right = reverse(slow);
-        ListNode res = head;
-        while (right.next != null) {
-            ListNode tmp = res.next;
-            res.next = right;
-            res = tmp;
-
-            tmp = right.next;
-            right.next = res;
-            right = tmp;
+        ListNode first = head, second = head;
+        while (first != null && first.next != null) {
+            first = first.next.next;
+            second = second.next;
         }
 
-    }
-
-    public ListNode reverse(ListNode head) {
-        ListNode pre = null, cur = head, next = null;
+        ListNode prev = null, cur = second, tmp = cur;
         while (cur != null) {
-            next = cur.next;
-            cur.next = pre;
-            pre = cur;
-            cur = next;
+            tmp = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = tmp;
         }
-        return pre;
+
+        first = head;
+        second = prev;
+        while (second.next != null) {
+            tmp = first.next;
+            first.next = second;
+            first = tmp;
+
+            tmp = second.next;
+            second.next = first;
+            second = tmp;
+        }
     }
 }
 // @lc code=end
