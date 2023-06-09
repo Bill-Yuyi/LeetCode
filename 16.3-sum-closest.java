@@ -10,25 +10,26 @@ import java.util.*;
 class Solution {
     public int threeSumClosest(int[] nums, int target) {
         Arrays.sort(nums);
-        int diff = Integer.MAX_VALUE;
+        int j = 0, k = 0, diff = Integer.MAX_VALUE;
         for (int i = 0; i < nums.length; i++) {
-            int left = i + 1, right = nums.length - 1;
-            while (left < right) {
-                int sum = nums[left] + nums[right] + nums[i];
+            j = i + 1;
+            k = nums.length - 1;
+            while (j < k) {
+                int sum = nums[i] + nums[j] + nums[k];
                 if (sum == target) {
                     return sum;
                 }
                 if (Math.abs(sum - target) < Math.abs(diff)) {
-                    diff = target - sum;
+                    diff = sum - target;
                 }
                 if (sum < target) {
-                    left++;
+                    j++;
                 } else {
-                    right--;
+                    k--;
                 }
             }
         }
-        return target - diff;
+        return diff + target;
     }
 }
 // @lc code=end
