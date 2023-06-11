@@ -7,42 +7,45 @@
 // @lc code=start
 class Solution {
     public String minWindow(String s, String t) {
-        if (t.length() > s.length())
+        if (t.length() > s.length()) {
             return "";
-        int[] ans = { -1, -1, Integer.MAX_VALUE };
-        int left = 0, valid = 0, required = 0;
-        int[] freqT = new int[128];
-        for (char c : t.toCharArray()) {
-            freqT[c]++;
         }
-        for (int i = 0; i < 128; i++) {
-            if (freqT[i] > 0) {
-                required++;
+
+        int[] requried = new int[128];
+        int requiredChars = 0;
+        for (int i = 0; i < t.length(); i++) {
+            requried[t.charAt(i)]++;
+            if (requried[t.charAt(i)] == 1) {
+                requiredChars++;
             }
         }
-        int[] freqS = new int[128];
+
+        int[] mapS = new int[128];
+        int[] ans = new int[] { -1, -1, Integer.MAX_VALUE };
+        int left = 0, valid = 0;
         for (int right = 0; right < s.length(); right++) {
-            char c = s.charAt(right);
-            freqS[c]++;
-            if (freqS[c] == freqT[c]) {
+            char in = s.charAt(right);
+            mapS[in]++;
+            if (mapS[in] == requried[in]) {
                 valid++;
             }
-            while (valid == required) {
-                if (ans[2] > right - left + 1) {
-                    ans[2] = right - left + 1;
+            while (valid == requiredChars) {
+                if (right - left + 1 < ans[2]) {
                     ans[0] = left;
                     ans[1] = right;
+                    ans[2] = right - left + 1;
                 }
 
                 char out = s.charAt(left);
-                if (freqS[out] == freqT[out])
+                if (mapS[out] == requried[out]) {
                     valid--;
-                freqS[out]--;
-
+                }
+                mapS[out]--;
                 left++;
             }
         }
-        return ans[0] == -1 ? "" : s.substring(ans[0], ans[1] + 1);
+
+        return ans[2] == Integer.MAX_VALUE ? "" : s.substring(ans[0], ans[1] + 1);
     }
 }
 // @lc code=end
