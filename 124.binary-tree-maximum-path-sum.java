@@ -24,18 +24,20 @@ class Solution {
     int res = Integer.MIN_VALUE;
 
     public int maxPathSum(TreeNode root) {
-        max(root);
+        traverse(root);
         return res;
     }
 
-    public int max(TreeNode root) {
-        if (root == null) {
+    int traverse(TreeNode node) {
+        if (node == null) {
             return 0;
         }
-        int left = Math.max(max(root.left), 0);
-        int right = Math.max(max(root.right), 0);
-        res = Math.max(left + right + root.val, res);
-        return Math.max(left, right) + root.val;
+
+        int left = Math.max(0, traverse(node.left));
+        int right = Math.max(0, traverse(node.right));
+        res = Math.max(left + right + node.val, res);
+        return Math.max(left, right) + node.val;
     }
+
 }
 // @lc code=end
