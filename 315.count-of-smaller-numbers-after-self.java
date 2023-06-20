@@ -12,13 +12,14 @@ class Solution {
     int[] count;
 
     public List<Integer> countSmaller(int[] nums) {
-        temp = new Pair[nums.length];
-        count = new int[nums.length];
-        Pair[] arr = new Pair[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            arr[i] = new Pair(nums[i], i);
+        int n = nums.length;
+        temp = new Pair[n];
+        count = new int[n];
+        Pair[] map = new Pair[n];
+        for (int i = 0; i < n; i++) {
+            map[i] = new Pair(nums[i], i);
         }
-        sort(arr, 0, nums.length - 1);
+        sort(map, 0, nums.length - 1);
         List<Integer> ans = new ArrayList<>();
         for (int c : count) {
             ans.add(c);
@@ -26,37 +27,44 @@ class Solution {
         return ans;
     }
 
-    public void sort(Pair[] nums, int i, int j) {
-        if (i == j) {
+    void sort(Pair[] map, int left, int right) {
+        if (left == right) {
             return;
         }
-        int mid = i + (j - i) / 2;
-        sort(nums, i, mid);
-        sort(nums, mid + 1, j);
-        merge(nums, i, mid, j);
 
+        int mid = left + (right - left) / 2;
+        sort(map, left, mid);
+        sort(map, mid + 1, right);
+        merge(map, left, mid, right);
     }
 
-    public void merge(Pair[] nums, int lo, int mid, int hi) {
-        for (int i = lo; i <= hi; i++) {
-            temp[i] = nums[i];
+    void merge(Pair[] map, int left, int mid, int right) {
+        for (int i = left; i <= right; i++) {
+            temp[i] = map[i];
         }
-        int i = lo, j = mid + 1;
-        for (int k = lo; k <= hi; k++) {
-            if (i == mid + 1) {
-                nums[k] = temp[j++];
-            } else if (j == hi + 1) {
-                nums[k] = temp[i++];
-                count[nums[k].id] += j - mid - 1;
-            } else if (temp[i].val <= temp[j].val) {
-                nums[k] = temp[i++];
-                count[nums[k].id] += j - mid - 1;
-            } else {
-                nums[k] = temp[j++];
 
+        int i = left, j = mid + 1;
+        while (i <= mid || j <= right) {
+            if (i <= mid && j <= right) {
+                if (temp[i].val <= temp[j].val) {
+                    map[left++] = temp[i];
+                    count[temp[i].id] += j - mid - 1;
+                    i++;
+                } else {
+                    map[left++] = temp[j++];
+                }
+            } else {
+                if (i <= mid) {
+                    map[left++] = temp[i];
+                    count[temp[i].id] += j - mid - 1;
+                    i++;
+                } else {
+                    map[left++] = temp[j++];
+                }
             }
         }
     }
+
 }
 
 class Pair {
