@@ -9,13 +9,13 @@ class Solution {
     public boolean validTree(int n, int[][] edges) {
         UF uf = new UF(n);
         for (int[] edge : edges) {
-            if (uf.connected(edge[0], edge[1])) {
+            if (uf.union(edge[0], edge[1])) {
                 return false;
             }
-            uf.union(edge[0], edge[1]);
         }
         return uf.count == 1;
     }
+
 }
 
 class UF {
@@ -25,11 +25,11 @@ class UF {
 
     UF(int n) {
         count = n;
-        parent = new int[n];
         size = new int[n];
+        parent = new int[n];
         for (int i = 0; i < n; i++) {
-            parent[i] = i;
             size[i] = 1;
+            parent[i] = i;
         }
     }
 
@@ -40,11 +40,7 @@ class UF {
         return parent[x];
     }
 
-    boolean connected(int x, int y) {
-        return find(x) == find(y);
-    }
-
-    void union(int x, int y) {
+    boolean union(int x, int y) {
         x = find(x);
         y = find(y);
         if (x != y) {
@@ -56,7 +52,9 @@ class UF {
                 parent[y] = x;
             }
             count--;
+            return false;
         }
+        return true;
     }
 }
 // @lc code=end
