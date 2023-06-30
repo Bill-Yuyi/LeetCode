@@ -8,30 +8,29 @@
 class Solution {
     public int closestMeetingNode(int[] edges, int node1, int node2) {
         int n = edges.length;
-        Integer[] dist1 = new Integer[n];
-        Integer[] dist2 = new Integer[n];
+        int[] dist1 = new int[n];
+        int[] dist2 = new int[n];
         Arrays.fill(dist1, -1);
         Arrays.fill(dist2, -1);
         dfs(edges, node1, dist1, 0);
         dfs(edges, node2, dist2, 0);
-        int minDist = Integer.MAX_VALUE;
+        int min = Integer.MAX_VALUE;
         int ans = -1;
-
         for (int i = 0; i < n; i++) {
-            if (dist1[i] != -1 && dist2[i] != -1 && minDist > Math.max(dist1[i], dist2[i])) {
+            if (Math.min(dist1[i], dist2[i]) >= 0 && Math.max(dist1[i], dist2[i]) < min) {
+                min = Math.max(dist1[i], dist2[i]);
                 ans = i;
-                minDist = Math.max(dist1[i], dist2[i]);
             }
         }
-
         return ans;
     }
 
-    void dfs(int[] edges, int node, Integer[] dist, int d) {
+    void dfs(int[] edges, int node, int[] dist, int d) {
         if (node != -1 && dist[node] == -1) {
             dist[node] = d;
             dfs(edges, edges[node], dist, d + 1);
         }
     }
+
 }
 // @lc code=end

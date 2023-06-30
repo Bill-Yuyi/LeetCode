@@ -21,7 +21,6 @@ class Solution {
                 }
             }
         int dist = -1;
-
         while (!queue.isEmpty()) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
@@ -31,10 +30,9 @@ class Solution {
                     if (x < 0 || x >= n || y < 0 || y >= m || grid[x][y] == 1) {
                         continue;
                     }
-                    queue.offer(new int[] { x, y });
                     grid[x][y] = 1;
+                    queue.offer(new int[] { x, y });
                 }
-
             }
             dist++;
         }
