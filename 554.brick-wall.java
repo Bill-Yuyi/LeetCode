@@ -17,10 +17,13 @@ class Solution {
                 map.put(pos, map.getOrDefault(pos, 0) + 1);
             }
         }
+
         int res = wall.size();
+
         if (!map.isEmpty()) {
             res -= Collections.max(map.values());
         }
+
         return res;
     }
 }
