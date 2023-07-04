@@ -7,15 +7,15 @@
 // @lc code=start
 class Solution {
     public int countPalindromicSubsequence(String s) {
+        int n = s.length();
         Integer[] firstSeen = new Integer[26];
         Integer[] lastSeen = new Integer[26];
 
         for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (firstSeen[c - 'a'] == null) {
-                firstSeen[c - 'a'] = i;
+            if (firstSeen[s.charAt(i) - 'a'] == null) {
+                firstSeen[s.charAt(i) - 'a'] = i;
             } else {
-                lastSeen[c - 'a'] = i;
+                lastSeen[s.charAt(i) - 'a'] = i;
             }
         }
 
