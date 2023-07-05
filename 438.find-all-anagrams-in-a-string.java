@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -11,36 +12,37 @@ import java.util.List;
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
         List<Integer> ans = new ArrayList<>();
-        int[] freqP = new int[26];
-        int[] freqS = new int[26];
-        int distinctChars = 0;
-        for (int i = 0; i < p.length(); i++) {
-            char c = p.charAt(i);
-            freqP[c - 'a']++;
-            if (freqP[c - 'a'] == 1) {
-                distinctChars++;
-            }
+        int n = s.length(), m = p.length();
+        if (n < m) {
+            return ans;
         }
-        int left = 0, valid = 0;
-        for (int right = 0; right < s.length(); right++) {
-            char in = s.charAt(right);
-            freqS[in - 'a']++;
-            if (freqS[in - 'a'] == freqP[in - 'a']) {
-                valid++;
+
+        int[] freqS = new int[26], freqT = new int[26];
+        freqT = build(freqT, p);
+        freqS = build(freqS, s.substring(0, m));
+        if (Arrays.equals(freqS, freqT)) {
+            ans.add(0);
+        }
+        freqS[s.charAt(0) - 'a']--;
+        int left = 1;
+        for (int right = m; right < n; right++) {
+            char c = s.charAt(right);
+            freqS[c - 'a']++;
+            if (Arrays.equals(freqS, freqT)) {
+                ans.add(left);
             }
-            while (valid == distinctChars) {
-                if (right - left + 1 == p.length()) {
-                    ans.add(left);
-                }
-                char out = s.charAt(left);
-                if (freqS[out - 'a'] == freqP[out - 'a']) {
-                    valid--;
-                }
-                freqS[out - 'a']--;
-                left++;
-            }
+            freqS[s.charAt(left++) - 'a']--;
         }
         return ans;
+
     }
+
+    int[] build(int[] freq, String s) {
+        for (char c : s.toCharArray()) {
+            freq[c - 'a']++;
+        }
+        return freq;
+    }
+
 }
 // @lc code=end

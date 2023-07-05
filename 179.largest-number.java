@@ -6,7 +6,7 @@
 
 // @lc code=start
 
-import java.util.PriorityQueue;
+import java.util.*;
 
 class Solution {
     public String largestNumber(int[] nums) {
@@ -14,10 +14,10 @@ class Solution {
         for (int num : nums) {
             pq.offer(String.valueOf(num));
         }
-        if (pq.peek().equals("0")) {
+        if (pq.peek().charAt(0) == '0') {
             return "0";
         }
-        String res = new String();
+        String res = "";
         while (!pq.isEmpty()) {
             res += pq.poll();
         }
