@@ -17,7 +17,7 @@ class Solution {
             } else if (c == 'L') {
                 force = 0;
             } else {
-                force = Math.max(force - 1, 0);
+                force = Math.max(0, force - 1);
             }
             forces[i] += force;
         }
@@ -36,9 +36,8 @@ class Solution {
 
         StringBuilder sb = new StringBuilder();
         for (int f : forces) {
-            sb.append(f > 0 ? 'R' : f < 0 ? 'L' : '.');
+            sb.append(f < 0 ? 'L' : f > 0 ? 'R' : '.');
         }
-
         return sb.toString();
     }
 }

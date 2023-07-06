@@ -16,9 +16,9 @@ class RandomizedSet {
     Random rand;
 
     public RandomizedSet() {
+        rand = new Random();
         map = new HashMap<>();
         list = new LinkedList<>();
-        rand = new Random();
     }
 
     public boolean insert(int val) {
@@ -26,7 +26,7 @@ class RandomizedSet {
             return false;
         }
         map.put(val, list.size());
-        list.add(list.size(), val);
+        list.add(val);
         return true;
     }
 
@@ -34,11 +34,11 @@ class RandomizedSet {
         if (!map.containsKey(val)) {
             return false;
         }
-        int idx = map.get(val);
-        int lastElement = list.get(list.size() - 1);
-        map.put(lastElement, idx);
-        list.set(idx, lastElement);
+        int pos = map.get(val);
+        int tmp = list.get(list.size() - 1);
+        list.set(pos, tmp);
         list.remove(list.size() - 1);
+        map.put(tmp, pos);
         map.remove(val);
         return true;
     }
