@@ -7,18 +7,15 @@
 // @lc code=start
 class Solution {
     public void moveZeroes(int[] nums) {
-        int i = 0, j = i + 1;
-        while (j < nums.length) {
-            while (i < j && nums[i] != 0) {
-                i++;
+        int slow = 0;
+        for (int fast = 0; fast < nums.length; fast++) {
+            if (nums[slow] == 0 && nums[fast] != 0) {
+                nums[slow] = nums[fast];
+                nums[fast] = 0;
             }
-            if (nums[j] != 0) {
-                int tmp = nums[i];
-                nums[i] = nums[j];
-                nums[j] = tmp;
-                i++;
+            if (nums[slow] != 0) {
+                slow++;
             }
-            j++;
         }
     }
 }

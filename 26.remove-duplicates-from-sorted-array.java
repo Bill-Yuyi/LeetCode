@@ -7,8 +7,8 @@
 // @lc code=start
 class Solution {
     public int removeDuplicates(int[] nums) {
-        int i = 0, j = i + 1;
-        while (j < nums.length) {
+        int i = 0, j = i + 1, n = nums.length;
+        while (j < n) {
             if (nums[i] == nums[j]) {
                 j++;
             } else {
