@@ -36,7 +36,7 @@ class Solution {
             for (int i = 0; i < size; i++) {
                 TreeNode cur = queue.poll();
                 if (cur.left == null && cur.right == null) {
-                    return res;
+                    return res + 1;
                 }
                 if (cur.left != null) {
                     queue.offer(cur.left);
