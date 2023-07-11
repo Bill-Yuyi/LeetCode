@@ -13,7 +13,6 @@ class Solution {
 
     public void transpose(int[][] m) {
         for (int i = 0; i < m.length; i++)
-            // start from i, avoid transpose rows that already set
             for (int j = i; j < m[0].length; j++) {
                 int tmp = m[i][j];
                 m[i][j] = m[j][i];
@@ -22,12 +21,16 @@ class Solution {
     }
 
     public void reflect(int[][] m) {
-        for (int i = 0; i < m.length; i++)
-            for (int j = 0; j < m[0].length / 2; j++) {
-                int tmp = m[i][m[0].length - 1 - j];
-                m[i][m[0].length - 1 - j] = m[i][j];
-                m[i][j] = tmp;
+        for (int[] row : m) {
+            int i = 0, j = row.length - 1;
+            while (i < j) {
+                int tmp = row[i];
+                row[i] = row[j];
+                row[j] = tmp;
+                i++;
+                j--;
             }
+        }
     }
 }
 // @lc code=end
