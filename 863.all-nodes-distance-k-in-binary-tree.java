@@ -22,50 +22,47 @@ class Solution {
     HashMap<Integer, List<Integer>> graph = new HashMap<>();
 
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-        traverse(root);
-        int step = 0;
-        Queue<Integer> queue = new LinkedList<>();
+        traverse(root, new TreeNode(-1));
+        int val = target.val;
         List<Integer> ans = new ArrayList<>();
-        queue.offer(target.val);
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(val);
         Set<Integer> visited = new HashSet<>();
-        visited.add(target.val);
-        while (!queue.isEmpty() && step <= k) {
+        visited.add(val);
+        int count = 0;
+
+        while (!queue.isEmpty() && count < k + 1) {
             int size = queue.size();
+            ans = new ArrayList<>();
             for (int i = 0; i < size; i++) {
                 int cur = queue.poll();
-                if (step == k) {
-                    ans.add(cur);
-                    continue;
-                }
+                ans.add(cur);
                 if (graph.containsKey(cur)) {
                     for (int next : graph.get(cur)) {
-                        if (visited.contains(next)) {
-                            continue;
+                        if (!visited.contains(next)) {
+                            queue.offer(next);
+                            visited.add(next);
                         }
-                        queue.offer(next);
-                        visited.add(next);
                     }
                 }
             }
-            step++;
+            count++;
         }
-        return ans;
+        return count == k + 1 ? ans : new ArrayList<>();
+
     }
 
-    void traverse(TreeNode node) {
-        if (node == null) {
+    private void traverse(TreeNode cur, TreeNode prev) {
+        if (cur == null || prev == null) {
             return;
         }
-        traverse(node.left);
-        if (node.left != null) {
-            graph.computeIfAbsent(node.val, val -> new ArrayList<>()).add(node.left.val);
-            graph.computeIfAbsent(node.left.val, val -> new ArrayList<>()).add(node.val);
+        traverse(cur.left, cur);
+        if (prev.val != -1) {
+            graph.computeIfAbsent(cur.val, k -> new ArrayList<>()).add(prev.val);
+            graph.computeIfAbsent(prev.val, k -> new ArrayList<>()).add(cur.val);
         }
-        if (node.right != null) {
-            graph.computeIfAbsent(node.val, val -> new ArrayList<>()).add(node.right.val);
-            graph.computeIfAbsent(node.right.val, val -> new ArrayList<>()).add(node.val);
-        }
-        traverse(node.right);
+
+        traverse(cur.right, cur);
     }
 }
 // @lc code=end
