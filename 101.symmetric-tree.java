@@ -28,13 +28,16 @@ class Solution {
         return compare(root.left, root.right);
     }
 
-    private boolean compare(TreeNode left, TreeNode right) {
-        if (left == null || right == null) {
-            return left == right;
+    boolean compare(TreeNode l, TreeNode r) {
+        if (l == null && r == null) {
+            return true;
         }
-        if (left.val != right.val)
+        if (l == null || r == null) {
             return false;
-        return compare(left.left, right.right) && compare(left.right, right.left);
+        }
+
+        return l.val == r.val && compare(l.left, r.right) && compare(l.right, r.left);
     }
+
 }
 // @lc code=end
