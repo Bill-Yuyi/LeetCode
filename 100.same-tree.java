@@ -1,8 +1,7 @@
-import java.util.*;
 /*
- * @lc app=leetcode id=226 lang=java
+ * @lc app=leetcode id=100 lang=java
  *
- * [226] Invert Binary Tree
+ * [100] Same Tree
  */
 
 // @lc code=start
@@ -22,15 +21,14 @@ import java.util.*;
  * }
  */
 class Solution {
-    public TreeNode invertTree(TreeNode root) {
-        if (root == null) {
-            return null;
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) {
+            return true;
         }
-        TreeNode left = invertTree(root.left);
-        TreeNode right = invertTree(root.right);
-        root.left = right;
-        root.right = left;
-        return root;
+        if (p == null || q == null) {
+            return false;
+        }
+        return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
     }
 }
 // @lc code=end

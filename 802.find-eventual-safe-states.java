@@ -6,48 +6,45 @@
 
 // @lc code=start
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 class Solution {
-    public List<Integer> eventualSafeNodes(int[][] graph) {
-        int[] outdegere = new int[graph.length];
-        HashMap<Integer, List<Integer>> map = new HashMap<>();
-
-        for (int i = 0; i < graph.length; i++) {
-            for (int next : graph[i]) {
-                outdegere[i]++;
-                map.computeIfAbsent(next, val -> new ArrayList<>()).add(i);
+    public List<Integer> eventualSafeNodes(int[][] edges) {
+        HashMap<Integer, List<Integer>> graph = new HashMap<>();
+        int n = edges.length;
+        int[] outdegree = new int[n];
+        for (int i = 0; i < n; i++) {
+            for (int edge : edges[i]) {
+                outdegree[i]++;
+                graph.computeIfAbsent(edge, k -> new ArrayList<>()).add(i);
             }
         }
-
         List<Integer> ans = new ArrayList<>();
         Queue<Integer> queue = new LinkedList<>();
-        // boolean[] visited = new boolean[graph.length];
-        for (int i = 0; i < outdegere.length; i++) {
-            if (outdegere[i] == 0) {
-                ans.add(i);
+        for (int i = 0; i < n; i++) {
+            if (outdegree[i] == 0) {
                 queue.offer(i);
-
+                ans.add(i);
             }
         }
 
         while (!queue.isEmpty()) {
-            int cur = queue.poll();
-            if (map.containsKey(cur)) {
-                for (int next : map.get(cur)) {
-                    outdegere[next]--;
-                    if (outdegere[next] == 0) {
-                        queue.offer(next);
-                        ans.add(next);
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int cur = queue.poll();
+                if (graph.containsKey(cur)) {
+                    for (int next : graph.get(cur)) {
+                        outdegree[next]--;
+                        if (outdegree[next] == 0) {
+                            queue.offer(next);
+                            ans.add(next);
+                        }
                     }
                 }
             }
         }
-        Collections.sort(ans, (a, b) -> (a - b));
+        Collections.sort(ans);
         return ans;
-
     }
 }
 // @lc code=end

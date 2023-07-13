@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=543 lang=java
+ * @lc app=leetcode id=110 lang=java
  *
- * [543] Diameter of Binary Tree
+ * [110] Balanced Binary Tree
  */
 
 // @lc code=start
@@ -21,22 +21,19 @@
  * }
  */
 class Solution {
-
-    public int diameterOfBinaryTree(TreeNode root) {
-        int[] max = new int[] { 0 };
-        maxDepth(root, max);
-        return max[0];
+    public boolean isBalanced(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        int diff = Math.abs(getHeight(root.left) - getHeight(root.right));
+        return diff < 2 && isBalanced(root.left) && isBalanced(root.right);
     }
 
-    int maxDepth(TreeNode root, int[] max) {
+    int getHeight(TreeNode root) {
         if (root == null) {
             return 0;
         }
-        int left = maxDepth(root.left, max);
-        int right = maxDepth(root.right, max);
-        max[0] = Math.max(left + right, max[0]);
-        return Math.max(left, right) + 1;
+        return Math.max(getHeight(root.left), getHeight(root.right)) + 1;
     }
-
 }
 // @lc code=end

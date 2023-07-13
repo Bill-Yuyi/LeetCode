@@ -1,8 +1,7 @@
-import java.util.*;
 /*
- * @lc app=leetcode id=226 lang=java
+ * @lc app=leetcode id=112 lang=java
  *
- * [226] Invert Binary Tree
+ * [112] Path Sum
  */
 
 // @lc code=start
@@ -22,15 +21,14 @@ import java.util.*;
  * }
  */
 class Solution {
-    public TreeNode invertTree(TreeNode root) {
+    public boolean hasPathSum(TreeNode root, int targetSum) {
         if (root == null) {
-            return null;
+            return false;
         }
-        TreeNode left = invertTree(root.left);
-        TreeNode right = invertTree(root.right);
-        root.left = right;
-        root.right = left;
-        return root;
+        if (root.left == null && root.right == null && targetSum == root.val) {
+            return true;
+        }
+        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
     }
 }
 // @lc code=end
