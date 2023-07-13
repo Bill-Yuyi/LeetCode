@@ -25,7 +25,8 @@ class Solution {
         if (root == null) {
             return null;
         }
-        if (root.val == key) {
+
+        if (key == root.val) {
             if (root.left == null) {
                 return root.right;
             }
@@ -37,14 +38,12 @@ class Solution {
                 cur = cur.left;
             }
             cur.left = root.left;
-            root = root.right;
-            return root;
-        }
-        if (root.val < key) {
+            return root.right;
+        } else if (key < root.val) {
+            root.left = deleteNode(root.left, key);
+        } else {
             root.right = deleteNode(root.right, key);
-            return root;
         }
-        root.left = deleteNode(root.left, key);
         return root;
     }
 }
