@@ -26,22 +26,41 @@ class Solution {
         if (root == null) {
             return true;
         }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-        boolean nullChecker = false;
+        Queue<Pair> queue = new LinkedList<>();
+        queue.offer(new Pair(root, 1));
+        int last = 0;
         while (!queue.isEmpty()) {
-            TreeNode cur = queue.poll();
-            if (cur == null) {
-                nullChecker = true;
-            } else {
-                if (nullChecker) {
+            int size = queue.size();
+
+            for (int i = 0; i < size; i++) {
+                Pair p = queue.poll();
+                TreeNode node = p.node;
+                if (p.index == last + 1) {
+                    last = p.index;
+                } else {
+
                     return false;
                 }
-                queue.offer(cur.left);
-                queue.offer(cur.right);
+                if (node.left != null) {
+                    queue.offer(new Pair(node.left, 2 * p.index));
+                }
+                if (node.right != null) {
+                    queue.offer(new Pair(node.right, 2 * p.index + 1));
+                }
             }
         }
         return true;
     }
+
+    class Pair {
+        TreeNode node;
+        int index;
+
+        Pair(TreeNode node, int index) {
+            this.node = node;
+            this.index = index;
+        }
+    }
+
 }
 // @lc code=end

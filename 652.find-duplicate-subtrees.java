@@ -27,25 +27,23 @@ class Solution {
     public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
         map = new HashMap<>();
         List<TreeNode> ans = new ArrayList<>();
-        if (root == null) {
-            return ans;
-        }
         traverse(root);
-        for (List<TreeNode> list : map.values()) {
-            if (list.size() > 1) {
-                ans.add(list.get(0));
+        for (List<TreeNode> v : map.values()) {
+            if (v.size() > 1) {
+                ans.add(v.get(0));
             }
         }
         return ans;
     }
 
-    public String traverse(TreeNode node) {
+    String traverse(TreeNode node) {
         if (node == null) {
-            return "";
+            return "NULL";
         }
         String key = "(" + traverse(node.left) + node.val + traverse(node.right) + ")";
         map.computeIfAbsent(key, val -> new ArrayList<>()).add(node);
         return key;
     }
+
 }
 // @lc code=end

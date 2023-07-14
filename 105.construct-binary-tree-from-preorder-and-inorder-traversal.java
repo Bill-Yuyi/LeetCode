@@ -29,20 +29,21 @@ class Solution {
         for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
         }
-        return build(preorder, 0, preorder.length - 1);
+        return build(preorder, inorder, 0, inorder.length - 1);
+
     }
 
-    public TreeNode build(int[] preorder, int start, int end) {
+    TreeNode build(int[] preorder, int[] inorder, int start, int end) {
         if (start > end) {
             return null;
         }
-        int rootVal = preorder[index];
-        int rootPos = map.get(rootVal);
-        TreeNode node = new TreeNode(rootVal);
-        index++;
-        node.left = build(preorder, start, rootPos - 1);
-        node.right = build(preorder, rootPos + 1, end);
+        int val = preorder[index++];
+        int pos = map.get(val);
+        TreeNode node = new TreeNode(val);
+        node.left = build(preorder, inorder, start, pos - 1);
+        node.right = build(preorder, inorder, pos + 1, end);
         return node;
     }
+
 }
 // @lc code=end
