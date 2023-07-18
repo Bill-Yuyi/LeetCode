@@ -22,19 +22,18 @@
  */
 class Solution {
     public boolean isValidBST(TreeNode root) {
-        return checker(root, null, null);
+        return helper(root, null, null);
     }
 
-    public boolean checker(TreeNode node, TreeNode min, TreeNode max) {
+    private boolean helper(TreeNode node, Integer min, Integer max) {
         if (node == null) {
             return true;
         }
-        if (min != null && node.val <= min.val)
-            return false;
-        if (max != null && node.val >= max.val) {
+        if (min != null && node.val <= min || max != null && node.val >= max) {
             return false;
         }
-        return checker(node.left, min, node) && checker(node.right, node, max);
+        return helper(node.left, min, node.val) && helper(node.right, node.val, max);
     }
+
 }
 // @lc code=end

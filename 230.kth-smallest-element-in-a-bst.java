@@ -24,20 +24,26 @@ import java.util.List;
  * }
  */
 class Solution {
-    List<Integer> list = new ArrayList<>();
 
     public int kthSmallest(TreeNode root, int k) {
-        traverse(root);
-        return list.get(k - 1);
+        int[] pos = new int[] { 0, 0 };
+        traverse(root, pos, k);
+        return pos[1];
     }
 
-    public void traverse(TreeNode node) {
+    void traverse(TreeNode node, int[] pos, int k) {
         if (node == null) {
             return;
         }
-        traverse(node.left);
-        list.add(node.val);
-        traverse(node.right);
+        traverse(node.left, pos, k);
+        pos[0] += 1;
+        if (pos[0] == k) {
+            pos[1] = node.val;
+            return;
+        }
+        traverse(node.right, pos, k);
+
     }
+
 }
 // @lc code=end
