@@ -31,7 +31,7 @@ class Solution {
         return sum;
     }
 
-    public void traverse(TreeNode node, int cur) {
+    void traverse(TreeNode node, int cur) {
         if (node == null) {
             return;
         }
@@ -42,7 +42,7 @@ class Solution {
         }
         traverse(node.left, cur);
         traverse(node.right, cur);
-
     }
+
 }
 // @lc code=end
